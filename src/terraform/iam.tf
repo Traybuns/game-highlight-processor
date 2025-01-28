@@ -77,12 +77,7 @@ data "aws_iam_policy_document" "mediaconvert_trust" {
   }
 }
 
-# ------------------------------------------------------------------------
-# Resource: aws_iam_role.mediaconvert_role
-# ------------------------------------------------------------------------
-# This IAM role is created for AWS MediaConvert. It uses the trust policy
-# defined in the mediaconvert_trust data source to allow MediaConvert to assume this role.
-# ------------------------------------------------------------------------
+
 resource "aws_iam_role" "mediaconvert_role" {
   name               = "${var.project_name}-mediaconvert-role"  # Name of the IAM role, incorporating the project name variable
   assume_role_policy = data.aws_iam_policy_document.mediaconvert_trust.json  # Attach the trust policy JSON to the role
@@ -104,9 +99,11 @@ data "aws_iam_policy_document" "mediaconvert_policy_doc" {
       "logs:PutLogEvents"      # Allow putting log events into CloudWatch Logs
     ]
     resources = [
+
+     
       "arn:aws:logs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:log-group:/ecs/${var.project_name}/*"
-      # ARN for the specific CloudWatch Logs log group associated with the ECS project
     ]
+    
   }
 }
 

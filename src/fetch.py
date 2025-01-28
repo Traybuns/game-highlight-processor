@@ -19,16 +19,6 @@ from config import (
 )
 
 def fetch_highlights():
-    """
-    Fetch basketball highlights from the API.
-    
-    This function makes a GET request to the specified API endpoint with the necessary
-    headers and query parameters to retrieve basketball highlights. It handles any
-    request-related exceptions and returns the fetched highlights as a JSON object.
-    
-    Returns:
-        dict or None: The fetched highlights as a JSON dictionary if successful; otherwise, None.
-    """
     try:
        
         query_params = {
@@ -64,17 +54,6 @@ def fetch_highlights():
         return None
 
 def save_to_s3(data, file_name):
-    """
-    Save data to an S3 bucket.
-    
-    This function uploads the provided data to a specified S3 bucket. It first checks
-    whether the bucket exists and creates it if it does not. The data is then serialized
-    to JSON and uploaded to the S3 bucket with the specified file name.
-    
-    Args:
-        data (dict): The data to be saved to S3.
-        file_name (str): The name of the file (without extension) to be created in S3.
-    """
     try:
        
         s3 = boto3.client("s3", region_name=AWS_REGION)
@@ -118,17 +97,6 @@ def save_to_s3(data, file_name):
         print(f"Error saving to S3: {e}")
 
 def process_highlights():
-    """
-    Main function to fetch and process basketball highlights.
-    
-    This function orchestrates the workflow of fetching basketball highlights from the API
-    and saving them to an S3 bucket. It first calls 'fetch_highlights' to retrieve the data,
-    and if successful, proceeds to call 'save_to_s3' to store the data in S3.
-    """
-    
-    print("Fetching highlights...")
-    
-    
     highlights = fetch_highlights()
     
     
